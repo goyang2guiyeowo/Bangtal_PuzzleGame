@@ -241,6 +241,7 @@ int main()
         return true;
         });
 
+
     //게임 시작
     startGame(scene);
 
