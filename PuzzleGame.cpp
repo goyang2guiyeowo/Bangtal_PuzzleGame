@@ -6,7 +6,7 @@ using namespace bangtal;
 int main()
 {
     //배경 생성
-    auto scene = Scene::create("퍼즐 맞추기", "C:/Users/SAMSUNG/Desktop/배경.jpg");
+    auto scene = Scene::create("퍼즐 맞추기", "배경.jpg");
 
     //퍼즐 생성
     auto p4x = 70, p4y = 400;
@@ -19,17 +19,17 @@ int main()
     auto p3x = 241, p3y = 58;
     auto p9x = 412, p9y = 58;
 
-    auto puz4 = Object::create("C:/Users/SAMSUNG/Desktop/4.jpg", scene, p4x, p4y);
-    auto puz8 = Object::create("C:/Users/SAMSUNG/Desktop/8.jpg", scene, p8x, p8y);
-    auto puz5 = Object::create("C:/Users/SAMSUNG/Desktop/5.jpg", scene, p5x, p5y);
-    auto puz7 = Object::create("C:/Users/SAMSUNG/Desktop/7.jpg", scene, p7x, p7y);
-    auto puz1 = Object::create("C:/Users/SAMSUNG/Desktop/1.jpg", scene, p1x, p1y);
-    auto puz6 = Object::create("C:/Users/SAMSUNG/Desktop/6.jpg", scene, p6x, p6y);
-    auto puz2 = Object::create("C:/Users/SAMSUNG/Desktop/2.jpg", scene, p2x, p2y);
-    auto puz3 = Object::create("C:/Users/SAMSUNG/Desktop/3.jpg", scene, p3x, p3y);
+    auto puz4 = Object::create("4.jpg", scene, p4x, p4y);
+    auto puz8 = Object::create("8.jpg", scene, p8x, p8y);
+    auto puz5 = Object::create("5.jpg", scene, p5x, p5y);
+    auto puz7 = Object::create("7.jpg", scene, p7x, p7y);
+    auto puz1 = Object::create("1.jpg", scene, p1x, p1y);
+    auto puz6 = Object::create("6.jpg", scene, p6x, p6y);
+    auto puz2 = Object::create("2.jpg", scene, p2x, p2y);
+    auto puz3 = Object::create("3.jpg", scene, p3x, p3y);
 
     //재시작 버튼 생성
-    auto restart = Object::create("C:/Users/SAMSUNG/Desktop/restart.png", scene, 700, 530);
+    auto restart = Object::create("restart.png", scene, 700, 530);
 
     //퍼즐1 옮기기
     puz1->setOnMouseCallback([&](ObjectPtr object, int x, int y, MouseAction action) -> bool {
@@ -212,6 +212,6 @@ int main()
         endGame();
         return true;
     };
-
+    
     startGame(scene);
 }
