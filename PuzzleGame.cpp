@@ -31,6 +31,40 @@ int main()
     //재시작 버튼 생성
     auto restart = Object::create("restart.png", scene, 700, 530);
 
+    //종료 버튼 생성
+    auto finish = Object::create("finish.png", scene, 630, 420);
+
+    //재시작 버튼을 누르면 재시작
+    restart->setOnMouseCallback([&](ObjectPtr object, int x, int y, MouseAction action)->bool {
+        p4x = 70, p4y = 400;
+        p8x = 241, p8y = 400;
+        p5x = 412, p5y = 400;
+        p7x = 70, p7y = 229;
+        p1x = 241, p1y = 229;
+        p6x = 412, p6y = 229;
+        p2x = 70, p2y = 58;
+        p3x = 241, p3y = 58;
+        p9x = 412, p9y = 58;
+
+        puz1->locate(scene, p1x, p1y);
+        puz2->locate(scene, p2x, p2y);
+        puz3->locate(scene, p3x, p3y);
+        puz4->locate(scene, p4x, p4y);
+        puz5->locate(scene, p5x, p5y);
+        puz6->locate(scene, p6x, p6y);
+        puz7->locate(scene, p7x, p7y);
+        puz8->locate(scene, p8x, p8y);
+
+        return true;
+        });
+
+    //종료 버튼을 누르면 게임 종료
+    finish->setOnMouseCallback([&](ObjectPtr object, int x, int y, MouseAction action)->bool {
+        endGame();
+
+        return true;
+        });
+
     //퍼즐1 옮기기
     puz1->setOnMouseCallback([&](ObjectPtr object, int x, int y, MouseAction action) -> bool {
         if (action == MouseAction::MOUSE_DRAG_RIGHT) {
@@ -207,11 +241,8 @@ int main()
         return true;
         });
 
-    //퍼즐을 풀면 종료
-    if ((p1x == 70) && (p1y == 400) && (p2x == 241) && (p2y == 400) && (p3x == 412) && (p3y == 400) && (p4x == 70) && (p4y == 229) && (p5x == 241) && (p5y == 229) && (p6x == 412) && (p6y == 229) && (p7x == 70) && (p7y == 58) && (p8x == 241) && (p8y == 58)) {
-        endGame();
-        return true;
-    };
-    
+    //게임 시작
     startGame(scene);
+
+    return 0;
 }
