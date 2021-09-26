@@ -3,14 +3,18 @@
 using namespace bangtal;
 #include <cstdlib>
 #include <ctime>
+#include <time.h>
 
 ScenePtr scene;
 ObjectPtr puz[9], puz_original[9];
 ObjectPtr start, restart;
 
-TimerPtr timer;
-float mixTime = 0.03f;
-int mixCount = 50;
+TimerPtr timer, limit;
+float mixTime = 0.03f, limitT = 100.f;
+int mixCount = 50, takenT;
+char t[5];
+
+clock_t tstart;
 
 int blank;
 
@@ -68,10 +72,17 @@ int random_move() {
 
 //게임을 시작하는 함수
 void start_game() {
-    //타이머 작동
+    //퍼즐섞기 타이머 작동
     mixCount = 50;
     timer->set(mixTime);
     timer->start();
+
+    //시간제한 작동
+    limit->set(limitT);
+    limit->start();
+
+    //걸린 시간 재기 시작
+    tstart = clock();
 
     start->hide(); //시작버튼 숨기기
     restart->show(); //재시작버튼 보이기
@@ -91,7 +102,15 @@ void end_game() {
     puz[8]->show();
     start->show();
     restart->hide();
-    showMessage("Completed!!!");
+    limit->stop();
+
+    //걸린 시간을 계산
+    clock_t tend = clock();
+    takenT = (tend - tstart)/CLOCKS_PER_SEC;
+
+    sprintf(t, "와우~혹시 당신은 퍼즐천재?\n걸린시간 : %f초", takenT);
+
+    showMessage(t);
 }
 
 //게임 초기화
@@ -141,7 +160,7 @@ void init_game() {
         return true;
         });
 
-    //게임 시작하면 타이머를 이용해 퍼즐 섞기
+    //타이머를 이용해 퍼즐 섞기
     timer = Timer::create(mixTime);
     timer->setOnTimerCallback([&](auto)->bool {
         move(random_move());
@@ -155,7 +174,16 @@ void init_game() {
         return true;
         });
 
-    //재시작버튼을 누르면 다시 섞기
+    //시간제한이 끝나면 실패
+    limit = Timer::create(limitT);
+    showTimer(limit);
+    limit->setOnTimerCallback([&](TimerPtr)->bool {
+        showMessage("시간초과!!ㅠㅠ");
+
+        return true;
+        });
+
+    //재시작버튼을 누르면 다시 섞고 시작
     restart->setOnMouseCallback([&](auto, auto, auto, auto)->bool {
         start_game();
 
