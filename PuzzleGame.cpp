@@ -150,6 +150,7 @@ void init_game() {
     restart = Object::create("restart.png", scene, 700, 530);
     restart->hide();
 
+    //시간제한 아이콘 생성
     tt = Object::create("time.png", scene, 260, 590);
 
     //시작 버튼 누르면 게임 시작
