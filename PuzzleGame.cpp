@@ -7,11 +7,11 @@ using namespace bangtal;
 
 ScenePtr scene;
 ObjectPtr puz[9], puz_original[9];
-ObjectPtr start, restart;
+ObjectPtr start, restart, tt;
 
 TimerPtr timer, limit;
-float mixTime = 0.03f, limitT = 100.f;
-int mixCount = 50, takenT;
+float mixTime = 0.03f, limitT = 120.f, takenT;
+int mixCount = 50;
 char t[5];
 
 clock_t tstart;
@@ -108,7 +108,7 @@ void end_game() {
     clock_t tend = clock();
     takenT = (tend - tstart)/CLOCKS_PER_SEC;
 
-    sprintf(t, "와우~혹시 당신은 퍼즐천재?\n걸린시간 : %f초", takenT);
+    sprintf(t, "와우~혹시 당신은 퍼즐천재?\n걸린시간 : %.0f초", takenT);
 
     showMessage(t);
 }
@@ -149,6 +149,8 @@ void init_game() {
     start = Object::create("start.png", scene, 250, 100);
     restart = Object::create("restart.png", scene, 700, 530);
     restart->hide();
+
+    tt = Object::create("time.png", scene, 260, 590);
 
     //시작 버튼 누르면 게임 시작
     start->setOnMouseCallback([&](auto, auto, auto, auto)->bool {
